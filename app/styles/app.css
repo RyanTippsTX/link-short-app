@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body {
+    @apply bg-black text-gray-100 w-full h-full;
+  }
+
+  .using-mouse * {
+    outline: none !important;
+  }
+}

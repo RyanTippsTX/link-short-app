@@ -1,0 +1,3 @@
+# README
+
+SolidStart example app
