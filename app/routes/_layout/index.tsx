@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 // defines the page content at the given route
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/_layout/')({
   component: Home,
   // loader: async () => await getCount(), // equivalent of getSSProps
 });
