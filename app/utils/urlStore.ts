@@ -1,13 +1,16 @@
 import { createServerFn } from '@tanstack/start';
+import { getRequestHeaders } from 'vinxi/http';
 
 export const getUrls = createServerFn({ method: 'GET' }).handler(async () => {
+  const host = getRequestHeaders().host;
   const activeUrlStore = Object.entries(urlStore).reduce<URLStore>((acc, [id, data]) => {
     if (data.expiresAt > Date.now()) {
       acc[id] = data;
     }
     return acc;
   }, {});
-  return activeUrlStore;
+
+  return { activeUrlStore, host };
 });
 
 export const getUrl = createServerFn({ method: 'GET' })
