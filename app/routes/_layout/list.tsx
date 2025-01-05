@@ -1,17 +1,24 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { getUrls } from '~/utils/urlStore';
 
 export const Route = createFileRoute('/_layout/list')({
   component: Home,
-  loader: async () => await getUrls(), // equivalent of getSSProps
+  loader: async ({ context }) => {
+    console.log('🔥 context', context);
+    return await getUrls();
+  },
 });
 
 function Home() {
   const router = useRouter();
   const state = Route.useLoaderData();
-  const [playing, setPlaying] = useState(false);
+
+  const [baseUrl, setBaseUrl] = useState('');
+  useEffect(() => {
+    setBaseUrl(window.location.origin);
+  }, []);
 
   return (
     <div>
@@ -19,7 +26,7 @@ function Home() {
         // array from object keys
         Object.keys(state).map((id) => {
           const { url, expiresAt } = state[id];
-          const shortUrl = `${window.location.origin}/${id}`;
+          const shortUrl = `${baseUrl}/${id}`;
           return (
             <div key={id} className="p-4 border border-gray-300 flex gap-4 items-center">
               {/* expiration */}
