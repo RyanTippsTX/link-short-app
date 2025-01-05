@@ -69,7 +69,7 @@ function Home() {
       <button
         disabled={!formIsValid || loading}
         type="submit"
-        className="p-2 bg-peach-500 text-white hover:bg-peach-400"
+        className="p-2 bg-peach-600 text-white hover:bg-peach-400"
       >
         Submit
       </button>
@@ -87,7 +87,7 @@ const Success = ({ urlId }: { urlId: string }) => {
         onClick={() => {
           navigator.clipboard.writeText(shortUrl);
         }}
-        className={'p-2 bg-peach-500 text-white hover:bg-peach-400 mt-4'}
+        className="p-2 bg-peach-600 text-white hover:bg-peach-400 mt-4"
       >
         Copy to clipboard
       </button>
