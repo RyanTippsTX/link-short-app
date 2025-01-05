@@ -28,4 +28,6 @@ const Nav = () => (
   </nav>
 );
 
-const Brand = () => <div className="font-bold text-lg tracking-tighter select-none">🩳 SHORTS</div>;
+const Brand = () => (
+  <div className="font-bold text-lg tracking-tight select-none">Url Shortener</div>
+);

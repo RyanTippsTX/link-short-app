@@ -6,9 +6,9 @@ import type { ReactNode } from 'react';
 
 const faviconEmoji = [
   //
-  '🩳',
+  // '🩳',
   '🔗',
-  '🌎',
+  // '🌎',
 ][0];
 
 export const Route = createRootRoute({
@@ -22,7 +22,7 @@ export const Route = createRootRoute({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'SHORTS - Url Shortener',
+        title: 'Url Shortener',
       },
     ],
     links: [
