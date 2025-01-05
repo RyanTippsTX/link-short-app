@@ -1,6 +1,14 @@
 import { createServerFn } from '@tanstack/start';
 
-export const getUrls = createServerFn({ method: 'GET' }).handler(async () => urlStore);
+export const getUrls = createServerFn({ method: 'GET' }).handler(async () => {
+  const activeUrlStore = Object.entries(urlStore).reduce<URLStore>((acc, [id, data]) => {
+    if (data.expiresAt > Date.now()) {
+      acc[id] = data;
+    }
+    return acc;
+  }, {});
+  return activeUrlStore;
+});
 
 export const getUrl = createServerFn({ method: 'GET' })
   .validator((id: string) => id)
@@ -27,5 +35,9 @@ const urlStore: URLStore = {
   '12345678': {
     url: 'https://www.tesla.com',
     expiresAt: Date.now() + 1000 * 60 * 60 * 24,
+  },
+  '23456789': {
+    url: 'https://www.paypal.com',
+    expiresAt: Date.now() - 1000 * 60 * 60 * 24,
   },
 };
