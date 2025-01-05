@@ -1,6 +1,5 @@
 import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { useState } from 'react';
-import { twMerge } from 'tailwind-merge';
 import { createUrl } from '~/utils/urlStore';
 
 // defines the page content at the given route
@@ -81,13 +80,17 @@ function Home() {
 const Success = ({ urlId }: { urlId: string }) => {
   const shortUrl = `${window.location.origin}/${urlId}`;
   return (
-    <div className="mx-auto p-4">
-      <div>URL shortened!</div>
-      <div>
-        <a href={shortUrl} className="underline">
-          {shortUrl}
-        </a>
-      </div>
+    <div className="py-8 text-center">
+      <div className="font-semibold text-2xl">URL shortened!</div>
+      <div className="underline">{shortUrl}</div>
+      <button
+        onClick={() => {
+          navigator.clipboard.writeText(shortUrl);
+        }}
+        className={'p-2 bg-peach-500 text-white hover:bg-peach-400 mt-4'}
+      >
+        Copy to clipboard
+      </button>
     </div>
   );
 };
