@@ -15,7 +15,13 @@ export const getUrls = createServerFn({ method: 'GET' }).handler(async () => {
 
 export const getUrl = createServerFn({ method: 'GET' })
   .validator((id: string) => id)
-  .handler(async ({ data: id }) => urlStore[id] || null);
+  .handler(async ({ data: id }) => {
+    const urlData = urlStore[id];
+    if (urlData && urlData.expiresAt > Date.now()) {
+      return urlData;
+    }
+    return null;
+  });
 
 export const createUrl = createServerFn({ method: 'POST' })
   .validator((data: { url: string; ttl: number }) => data)
