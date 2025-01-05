@@ -1,21 +1,15 @@
 import { createServerFn } from '@tanstack/start';
 
-export const getUrls = createServerFn({
-  method: 'GET',
-}).handler(async () => urlStore);
+export const getUrls = createServerFn({ method: 'GET' }).handler(async () => urlStore);
 
-export const getUrl = createServerFn({
-  method: 'GET',
-})
+export const getUrl = createServerFn({ method: 'GET' })
   .validator((id: string) => id)
   .handler(async ({ data: id }) => urlStore[id] || null);
 
-export const createUrl = createServerFn({
-  method: 'POST',
-})
+export const createUrl = createServerFn({ method: 'POST' })
   .validator((data: { url: string; ttl: number }) => data)
   .handler(async ({ data }) => {
-    const id = Math.random().toString(36).slice(2, 8);
+    const id = Math.random().toString(36).slice(2, 10);
     urlStore[id] = { url: data.url, expiresAt: Date.now() + data.ttl * 1000 };
     return id;
   });
