@@ -2,13 +2,13 @@ import { createFileRoute, useRouter } from '@tanstack/react-router';
 import { getUrls } from '~/utils/urlStore';
 
 export const Route = createFileRoute('/_layout/list')({
-  component: Home,
+  component: PageComponent,
   loader: async () => {
     return await getUrls();
   },
 });
 
-function Home() {
+function PageComponent() {
   const router = useRouter();
   const state = Route.useLoaderData();
 
