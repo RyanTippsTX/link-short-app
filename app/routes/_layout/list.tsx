@@ -29,19 +29,19 @@ function PageComponent() {
                 href={shortUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="font-bold text-blue-500 hover:underline"
+                className="font-bold text-peach-500  hover:underline"
               >
                 {shortUrl}
               </a>
             </div>
-            {'->'}
+            <span className="whitespace-nowrap">{'->'}</span>
             {/* url */}
             <div className="flex-1">
               <a
                 href={url}
                 target="_blank"
                 rel="noreferrer"
-                className="font-bold text-blue-500 hover:underline"
+                className="font-bold text-peach-500 hover:underline"
               >
                 {url}
               </a>

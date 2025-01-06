@@ -16,12 +16,12 @@ function LayoutComponent() {
 }
 
 const Nav = () => (
-  <nav className="text-base bg-peach-500 text-neutral-800 ">
+  <nav className="text-base bg-peach-600">
     <div className="max-w-3xl mx-auto px-4 py-2 flex gap-2 justify-between">
-      <Link to="/" className="my-auto">
+      <Link tabIndex={-1} to="/" className="my-auto">
         <Brand />
       </Link>
-      <Link to="/list" className="my-auto hover:underline">
+      <Link tabIndex={-1} to="/list" className="my-auto hover:underline">
         List
       </Link>
     </div>

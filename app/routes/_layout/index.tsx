@@ -42,10 +42,14 @@ function Home() {
   }
 
   return (
-    <form className="p-4 flex flex-col gap-2 mx-auto" onSubmit={onSubmit} style={{ maxWidth: 400 }}>
-      <p>Enter a URL to shorten:</p>
+    <form
+      className="p-4 flex flex-col gap-2 mx-auto space-y-4"
+      onSubmit={onSubmit}
+      style={{ maxWidth: 400 }}
+    >
+      <div className="text-xl font-medium">Enter a URL to shorten:</div>
       <label>
-        <div className="font-bold text-xs py-1">URL:</div>
+        <div className="font-bold text-xs">URL:</div>
         <input
           name="url"
           type="url"
@@ -61,7 +65,7 @@ function Home() {
           name="ttl"
           type="number"
           placeholder="Time to live (seconds)"
-          className="p-2 border border-gray-300 w-full"
+          className="p-2 border border-neutral-300 w-full"
           value={formState.ttl}
           onChange={onFormFieldChange}
         />
@@ -69,7 +73,7 @@ function Home() {
       <button
         disabled={!formIsValid || loading}
         type="submit"
-        className="p-2 bg-peach-600 text-white hover:bg-peach-400"
+        className="p-2 bg-peach-600 text-white hover:bg-peach-400 focus:outline-none focus:ring ring-peach-200"
       >
         Submit
       </button>
