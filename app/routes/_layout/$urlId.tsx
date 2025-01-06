@@ -1,5 +1,5 @@
 import { createFileRoute, redirect, useRouter } from '@tanstack/react-router';
-import { getUrl, getUrls } from '~/utils/urlStore';
+import { getUrl } from '~/utils/urlStore';
 
 export const Route = createFileRoute('/_layout/$urlId')({
   component: PageComponent,

@@ -26,7 +26,7 @@ function Home() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    console.log('form data:', formState);
+    // console.log('form data:', formState);
     try {
       const id = await createUrl({ data: formState });
       setFormState(defaultFormState);
