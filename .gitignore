@@ -1,23 +1,15 @@
 node_modules
 package-lock.json
-app.config.timestamp_*.js
-
+.env
 
 .DS_Store
-.cache
-.env
-.vercel
+
+# build artifacts
+app.config.timestamp_*.js
 .output
 .vinxi
-
+/dist
 /build/
 /api/
 /server/build
 /public/build
-.vinxi
-# Sentry Config File
-.env.sentry-build-plugin
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/
