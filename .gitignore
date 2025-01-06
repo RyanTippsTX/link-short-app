@@ -1,8 +1,7 @@
-count.txt
-
 node_modules
 package-lock.json
-yarn.lock
+app.config.timestamp_*.js
+
 
 .DS_Store
 .cache
