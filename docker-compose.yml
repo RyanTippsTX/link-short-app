@@ -14,8 +14,8 @@ services:
     environment:
       # Set environment variable for production mode
       - NODE_ENV=production
-    volumes:
-      # Optional: Mount current directory to the container (for dev environments)
-      - .:/usr/src/app
+    # volumes:
+    # Optional: Mount current directory to the container (for dev environments)
+    # - .:/usr/src/app
     # Automatically restart the container if crashes, unless you stop it manually
     restart: unless-stopped
