@@ -1,20 +1,26 @@
-# Start from an official Node.js image
-FROM node:lts-jod 
+# Use Node LTS slim image
+FROM node:lts-slim
 
-# Set the working directory in the container
-WORKDIR /usr/src/app
+# Set working directory
+WORKDIR /app
 
-# Copy package & lock files 
+# Install pnpm
+RUN npm install -g pnpm
+
+# Copy package files
 COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies
-RUN npm install -g pnpm && pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile
 
-# Copy the rest of the application code, use .dockerignore to exclude files
+# Copy application code
 COPY . .
 
-# Expose the app port
+# Build the application
+RUN pnpm build
+
+# Expose port
 EXPOSE 3000
 
-# Commands to run when the container starts
-CMD ["pnpm", "run", "start"]
+# Start the application
+CMD ["pnpm", "start"]
