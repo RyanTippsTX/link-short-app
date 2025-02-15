@@ -1,3 +1,3 @@
 # README
 
-SolidStart example app
+TanStack Start example app
