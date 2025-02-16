@@ -54,8 +54,8 @@ jobs:
             docker pull ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:latest
 
             # Stop and remove any existing container (ignore errors if they don't exist)
-            docker stop my-app || true
-            docker rm my-app || true
+            docker stop ${{ secrets.ECR_REPOSITORY }} || true
+            docker rm ${{ secrets.ECR_REPOSITORY }} || true
 
             # Run the updated container in detached mode mapping port 3000
-            docker run -d --name my-app -p 3000:3000 ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:latest
+            docker run -d --name ${{ secrets.ECR_REPOSITORY }} -p 3000:3000 ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:latest
