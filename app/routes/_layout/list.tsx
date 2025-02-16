@@ -24,12 +24,12 @@ function PageComponent() {
         const { url: url, expiresAt } = state.activeUrlStore[id];
         const shortUrl = `${host}/${id}`;
         return (
-          <div key={id} className="p-2 border-b border-gray-300">
+          <div key={id} className="p-2 border-b border-gray-300 whitespace-nowrap">
             {/* expiration */}
             <div className="text-sm text-gray-500">
               Expires at {new Date(expiresAt).toLocaleString()}
             </div>
-            <div className="flex gap-x-4 items-center flex-wrap">
+            <div className="flex items-center flex-wrap">
               {/* short url */}
               <div className="text-gray-500">
                 <a
@@ -41,9 +41,9 @@ function PageComponent() {
                   {shortUrl}
                 </a>
               </div>
-              <span className="whitespace-nowrap">{'->'}</span>
               {/* url */}
               <div className="flex-1">
+                <span className="mx-2">{'→'}</span>
                 <a
                   href={url}
                   target="_blank"
