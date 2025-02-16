@@ -24,33 +24,35 @@ function PageComponent() {
         const { url: url, expiresAt } = state.activeUrlStore[id];
         const shortUrl = `${host}/${id}`;
         return (
-          <div key={id} className="p-4 border border-gray-300 flex gap-4 items-center">
+          <div key={id} className="p-2 border-b border-gray-300">
             {/* expiration */}
             <div className="text-sm text-gray-500">
               Expires at {new Date(expiresAt).toLocaleString()}
             </div>
-            {/* short url */}
-            <div className="text-gray-500">
-              <a
-                href={shortUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="font-bold text-peach-500  hover:underline"
-              >
-                {shortUrl}
-              </a>
-            </div>
-            <span className="whitespace-nowrap">{'->'}</span>
-            {/* url */}
-            <div className="flex-1">
-              <a
-                href={url}
-                target="_blank"
-                rel="noreferrer"
-                className="font-bold text-peach-500 hover:underline"
-              >
-                {url}
-              </a>
+            <div className="flex gap-x-4 items-center flex-wrap">
+              {/* short url */}
+              <div className="text-gray-500">
+                <a
+                  href={shortUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-bold text-peach-500  hover:underline"
+                >
+                  {shortUrl}
+                </a>
+              </div>
+              <span className="whitespace-nowrap">{'->'}</span>
+              {/* url */}
+              <div className="flex-1">
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="font-bold text-peach-500 hover:underline"
+                >
+                  {url}
+                </a>
+              </div>
             </div>
           </div>
         );
