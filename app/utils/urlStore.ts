@@ -32,8 +32,9 @@ export const createUrl = createServerFn({ method: 'POST' })
       url: data.url,
       expiresAt: Date.now() + data.ttl * 1000,
     } satisfies UrlData;
-    await redis.hmset(`url:${id}`, urlData);
-    await redis.pexpireat(`url:${id}`, urlData.expiresAt);
+    redis.hmset(`url:${id}`, urlData).then(() => {
+      redis.pexpireat(`url:${id}`, urlData.expiresAt);
+    });
     return id;
   });
 
