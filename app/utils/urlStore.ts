@@ -3,7 +3,7 @@ import { redis } from './redis';
 // import { getRequestHeaders } from 'vinxi/http';
 
 export const getUrls = createServerFn({ method: 'GET' }).handler(async () => {
-  const keys = await redis.keys('url:*');
+  const keys = (await redis.keys('url:*')).slice(0, 40);
   const urlDataList = await Promise.all(
     keys.map(async (key) => {
       const urlData = (await redis.hgetall(key)) as any as UrlData;
