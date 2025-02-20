@@ -58,4 +58,5 @@ jobs:
             docker rm ${{ secrets.ECR_REPOSITORY }} || true
 
             # Run the updated container in detached mode mapping port 3000
-            docker run -d --name ${{ secrets.ECR_REPOSITORY }} -p 3000:3000 ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:latest
+            # and load environment variables from the .env file
+            docker run -d --name ${{ secrets.ECR_REPOSITORY }} --env-file ${{ secrets.ENV_PATH }} -p 3000:3000 ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:latest
