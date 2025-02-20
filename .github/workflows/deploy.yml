@@ -50,6 +50,9 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            # Login to ECR
+            aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
+
             # Clean up old Docker images and containers
             docker system prune -af --volumes
 
@@ -60,6 +63,12 @@ jobs:
             docker stop ${{ secrets.ECR_REPOSITORY }} || true
             docker rm ${{ secrets.ECR_REPOSITORY }} || true
 
-            # Run the updated container in detached mode mapping port 3000
-            # and load environment variables from the .env file
-            docker run -d --name ${{ secrets.ECR_REPOSITORY }} --env-file ${{ secrets.ENV_PATH }} -p 3000:3000 ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:latest
+            # Run the updated container with memory limits
+            docker run -d \
+              --name ${{ secrets.ECR_REPOSITORY }} \
+              --env-file ${{ secrets.ENV_PATH }} \
+              --memory=512m \
+              --memory-swap=1g \
+              --restart unless-stopped \
+              -p 3000:3000 \
+              ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:latest
