@@ -6,6 +6,12 @@ const client = createClient({
 
 client.on('error', (err) => console.log('Redis Client Error', err));
 
-await client.connect();
+// temp workaround for top level await
+export const redisPromise = (async () => {
+  await client.connect();
+  return client;
+})();
 
-export const redis = client;
+// await client.connect();
+
+// export const redis = client;

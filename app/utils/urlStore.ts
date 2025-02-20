@@ -1,9 +1,10 @@
 import { createServerFn } from '@tanstack/start';
-import { redis } from './redis';
+import { redisPromise } from './redis';
 
 // node-redis docs: https://redis.io/docs/latest/develop/clients/nodejs/
 
 export const getUrls = createServerFn({ method: 'GET' }).handler(async () => {
+  const redis = await redisPromise;
   const keys = (await redis.keys('url:*')).slice(0, 40);
   const urlDataList = await Promise.all(
     keys.map(async (key) => {
@@ -25,6 +26,7 @@ export const getUrls = createServerFn({ method: 'GET' }).handler(async () => {
 export const getUrl = createServerFn({ method: 'GET' })
   .validator((id: string) => id)
   .handler(async ({ data: id }) => {
+    const redis = await redisPromise;
     const rawData = await redis.hGetAll(`url:${id}`);
     if (!rawData.url) return null;
 
@@ -43,6 +45,7 @@ export const createUrl = createServerFn({ method: 'POST' })
       url: data.url,
       expiresAt: Date.now() + data.ttl * 1000,
     } satisfies UrlData;
+    const redis = await redisPromise;
     await redis.hSet(`url:${id}`, {
       url: urlData.url,
       expiresAt: urlData.expiresAt.toString(),
