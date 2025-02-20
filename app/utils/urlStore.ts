@@ -1,12 +1,17 @@
 import { createServerFn } from '@tanstack/start';
 import { redis } from './redis';
-// import { getRequestHeaders } from 'vinxi/http';
+
+// node-redis docs: https://redis.io/docs/latest/develop/clients/nodejs/
 
 export const getUrls = createServerFn({ method: 'GET' }).handler(async () => {
   const keys = (await redis.keys('url:*')).slice(0, 40);
   const urlDataList = await Promise.all(
     keys.map(async (key) => {
-      const urlData = (await redis.hgetall(key)) as any as UrlData;
+      const rawData = await redis.hGetAll(key);
+      const urlData: UrlData = {
+        url: rawData.url,
+        expiresAt: parseInt(rawData.expiresAt),
+      };
       return {
         id: key.split(':')[1],
         ...urlData,
@@ -20,8 +25,14 @@ export const getUrls = createServerFn({ method: 'GET' }).handler(async () => {
 export const getUrl = createServerFn({ method: 'GET' })
   .validator((id: string) => id)
   .handler(async ({ data: id }) => {
-    const urlData = await redis.hgetall(`url:${id}`);
-    return urlData as UrlData | null;
+    const rawData = await redis.hGetAll(`url:${id}`);
+    if (!rawData.url) return null;
+
+    const urlData: UrlData = {
+      url: rawData.url,
+      expiresAt: parseInt(rawData.expiresAt),
+    };
+    return urlData;
   });
 
 export const createUrl = createServerFn({ method: 'POST' })
@@ -32,9 +43,11 @@ export const createUrl = createServerFn({ method: 'POST' })
       url: data.url,
       expiresAt: Date.now() + data.ttl * 1000,
     } satisfies UrlData;
-    redis.hmset(`url:${id}`, urlData).then(() => {
-      redis.pexpireat(`url:${id}`, urlData.expiresAt);
+    await redis.hSet(`url:${id}`, {
+      url: urlData.url,
+      expiresAt: urlData.expiresAt.toString(),
     });
+    await redis.pExpireAt(`url:${id}`, urlData.expiresAt);
     return id;
   });
 
